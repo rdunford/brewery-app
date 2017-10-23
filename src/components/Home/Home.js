@@ -10,7 +10,7 @@ export default class Login extends Component {
             <div className='App'>  
                 <NavBar />
                 <div></div>
-                <BottomNav />
+                {/* <BottomNav /> */}
             </div> 
         )
     }

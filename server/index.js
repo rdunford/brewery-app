@@ -67,7 +67,7 @@ app.get('/auth/callback', passport.authenticate('auth0', {
 // Checks to see if the user is there
 app.get('/auth/me', (req, res, next) => {
     if (!req.user) {
-        return res.status(404).send('User not found.')
+        return res.status(200).send(false)
     }
     return res.status(200).send(req.user)
 })
@@ -89,6 +89,14 @@ passport.deserializeUser(function (id, done) {
         .then(user => {
             done(null, user[0])
         });
+});
+
+//PRODUCTS TABLE ENDPOINTS
+app.get('/api/productInventory', (req, res, next) => {
+    req.app.get('db').get_inventory()
+        .then(inventory => {
+            res.status(200).send(inventory)
+        }).catch(err => console.log(err));
 });
 
 // NODEMON 

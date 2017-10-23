@@ -7,9 +7,9 @@ import { connect } from 'react-redux'
 
 
 class NavBar extends Component {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
     componentDidMount() {
         this.props.getUserInfo()
     }
@@ -29,7 +29,7 @@ class NavBar extends Component {
                         <li><Link to='/beer'>BEER</Link></li>
                         <li><Link to='/events'>EVENTS</Link></li>
                         <li><Link to='/about'>ABOUT</Link></li>
-                        <li><Link to='/storefont'>STORE</Link></li>
+                        <li><Link to='/storefront'>STORE</Link></li>
                         {isLoggedIn ? (<li><Link to = '/dashboard'>PROFILE</Link></li>) : null}
                         {isLoggedIn ? (<a href='http://localhost:3005/auth/logout'><li>LOG OUT</li></a>) : (<a href={process.env.REACT_APP_LOGIN}><li>LOGIN</li></a>)}
                     </ul>

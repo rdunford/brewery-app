@@ -2,7 +2,7 @@
 
 .navbar-parent{
     display: flex;
-
+    overflow-x: hidden;
 }
 
 .logo-container{
@@ -22,6 +22,7 @@
 }
 
 .navbar-links-container{
+    overflow-x: hidden;
     display:flex;
     align-items: center;
     height:5%;
@@ -34,7 +35,7 @@
 .navbar-links{
     display: flex;
     justify-content: space-around;
-    width: 100%;
+    width: 100vw;
     list-style: none;
     padding: 0;
     font-size: 15px;

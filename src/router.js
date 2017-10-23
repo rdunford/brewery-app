@@ -13,13 +13,14 @@ import Dashboard from './components/Dashboard/Dashboard';
 export default (
 
     <div>
+        
         <Switch>
             <Route component={Home} exact path='/' />
             <Route component={Beer} path="/beer" />
             <Route component={Events} path='/events' />
             <Route component={About} path='/about' />
-            <Route component={StoreFront} path='/storefront' />
             <Route component={ShoppingCart} path='/shoppingcart' />
+            <Route component={StoreFront} path='/storefront' />
             <Route component={Dashboard} path='/dashboard' />
         </Switch>
 
