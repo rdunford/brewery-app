@@ -25,13 +25,13 @@ class NavBar extends Component {
                 </div>
                 <div className='navbar-links-container'>
                     <ul className='navbar-links'>
-                        <li><Link to='/'>HOME</Link></li>
-                        <li><Link to='/beer'>BEER</Link></li>
-                        <li><Link to='/events'>EVENTS</Link></li>
-                        <li><Link to='/about'>ABOUT</Link></li>
-                        <li><Link to='/storefront'>STORE</Link></li>
-                        {isLoggedIn ? (<li><Link to = '/dashboard'>PROFILE</Link></li>) : null}
-                        {isLoggedIn ? (<a href='http://localhost:3005/auth/logout'><li>LOG OUT</li></a>) : (<a href={process.env.REACT_APP_LOGIN}><li>LOGIN</li></a>)}
+                        <div><Link to='/'>HOME</Link></div>
+                        <div><Link to='/beer'>BEER</Link></div>
+                        <div><Link to='/events'>EVENTS</Link></div>
+                        <div><Link to='/about'>ABOUT</Link></div>
+                        <div><Link to='/storefront'>STORE</Link></div>
+                        {isLoggedIn ? (<div><Link to = '/dashboard'>PROFILE</Link></div>) : null}
+                        {isLoggedIn ? (<a href='http://localhost:3005/auth/logout'><div>LOG OUT</div></a>) : (<a href={process.env.REACT_APP_LOGIN}><div>LOGIN</div></a>)}
                     </ul>
                 </div>
             </div>

@@ -26,11 +26,17 @@ class Dashboard extends Component {
         return (
             <div>
                 <NavBar />
-                <div className=''>
-                    <h4>Account information:</h4>
+                <div className='user-container'>
+                    <h4>User profile:</h4>
                     {user.userid ? <img className='avatar' src={user.img} alt='pic' /> : null}
                     <p>Name: {user.userid ? user.user_name : null} </p>
                     <p>Email: {user.userid ? user.email : null}</p>
+                </div>
+
+                <div className = 'order-history-container'>
+                <div className = 'order-container'>
+
+                </div>
                 </div>
                 <BottomNav />
             </div>

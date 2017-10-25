@@ -22,7 +22,16 @@ export default function reducer(state = initalState, action) {
         case GET_USER_INFO + '_FULFILLED':
             return Object.assign({}, state, { user: action.payload });
         case GET_INVENTORY + '_FULFILLED':
-            return Object.assign({}, state, {inventory: action.payload});
+            return Object.assign({}, state, { inventory: action.payload });
+        case ADD_TO_CART:
+            const addCart = state.cart.slice();
+            addCart.push(action.payload);
+            return Object.assign({}, state, { cart: addCart });
+        // return Object.assign({}, state, { cart: [...state.cart, action.payload] })
+        case REMOVE_FROM_CART:
+            const removeCart = state.cart.slice();
+            removeCart.splice(action.payload, 1);
+            return Object.assign({}, state, { cart: removeCart });
         default:
             return state;
     }
@@ -41,15 +50,29 @@ export function getUserInfo() {
     }
 }
 
-export function getInventory(){
+export function getInventory() {
     const storeInventory = axios.get('/api/productInventory').then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         return res.data;
     });
 
-    return{
+    return {
         type: GET_INVENTORY,
         payload: storeInventory
     }
 
+}
+
+export function addToCart(product) {
+    return {
+        type: ADD_TO_CART,
+        payload: product
+    }
+}
+
+export function removeFromCart(id) {
+    return {
+        type: REMOVE_FROM_CART,
+        payload: id
+    }
 }
