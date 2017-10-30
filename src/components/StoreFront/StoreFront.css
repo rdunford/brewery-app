@@ -1,72 +1,142 @@
-/* .store-parent{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    position: relative;
+@import url('https://fonts.googleapis.com/css?family=Patua+One');
+.main_store-content{
+    -webkit-box-shadow:inset 0 0 666px 0 #000000;
+    box-shadow:inset 0 0 666px 0 #000000;
 }
-.inventory-item{
-    margin: 5vh 0;
-} */
-/* .bottom-info{
-    width:100%;
-    background-color: #3e3d3d;
-    position: fixed;
-    bottom: 0;
-}
-
-.info-items{
-    display:flex;
-    font-size: 15px;
-    font-weight: 400;
-    font-family: 'Patua One', Tahoma, sans-serif;
-    color:#e4e4e4;
-    list-style: none;
-    justify-content: space-around;
-    align-items:center;
-} */
-/* .product-image{
-    height: 200px;
-    width: auto;
-}
-
-.product-container {
-    margin: 5vh 0;
-
-}
-
 .storefront-container {
     position: relative;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    font-family: 'Source Code Pro', monospace;
 }
 
-.storefront-container h2 {
-    font-size: 30px;
-    margin: 3vh 0;
+ .product-img{
+    height: 200px;
+    width: 200px;
+    object-fit: scale-down;
 }
-
 .storefront-container h3 {
     font-size: 24px;
-    margin-bottom: 3vh;
-} */
+
+} 
+
+.product-container{
+    flex-flow: row wrap;
+    align-items: baseline;
+    padding: 20px;
+    width:30%;
+    height: 25%;
+    justify-content: space-around;
+    font-family: 'Patua One', sans-serif, tahoma;
+}
+.category-container{
+    width: 100vw;
+    display: flex;
+}
 
 .categories{
     position: relative;
-    width: 50%;
+    width: 50vw;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     list-style: none;
     cursor: pointer;
     text-decoration: none;
+    font-family: 'Patua One', sans-serif, tahoma;
+    padding-left: 20px;
+}
+.clear-cart{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-family: Tahoma, sans-serif;
+    line-height: 15px;
+    color: black;
 }
 
-li:hover{
+.cart_open-container{
+    display: flex;
+    width: 50vw;
+    flex-direction: row-reverse;
+    cursor: pointer;
+    align-self: center;
+    font-family: 'Patua One', sans-serif, tahoma;
+    letter-spacing: 1px;
+    padding-right: 3vw;
+    transition: height 1s ease-in;
+    overflow: hidden;
+}
+
+.dropDown-items{
+    border-radius: 3px;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    right: 0;
+    width: 30vw;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 0px 8px;
+    text-decoration: none;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 20px;
+    margin-right: 20px;
+    overflow: hidden;
+}
+
+.cartMenu-img{
+    padding: 5px 0px 5px 0px;
+    width: 100px;
+    height: 100px;
+}
+.addToCartBtn{
+    -webkit-box-shadow:inset 0 0 2px 0 #000000;
+    box-shadow:inset 0 0 0px 0 #18121248;
+    border-radius: 10px;
+    
+}
+
+.checkoutBtn{
+    display: inline-block;
+    align-self: flex-end;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.cart-container{
+    display: flex;
+    width: 50vw;
+    height:auto;
+    flex-direction: row-reverse;
+    transition: height 1s ease-out;
+    overflow: hidden;
+}
+
+.cart-summary{
+    cursor: pointer;
+    align-self: center;
+    font-family: 'Patua One', sans-serif, tahoma;
+    letter-spacing: 1px;
+    padding-right: 3vw;
+}
+.cart-summary:hover{
+    color:#fc032c;
+}
+
+.categories > :hover{
     color: #fc032c;
 }
 
+.spacer{
+    width:100vw;
+    height: 15vh;
+
+}

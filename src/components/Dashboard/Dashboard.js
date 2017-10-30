@@ -24,20 +24,23 @@ class Dashboard extends Component {
 
         const user = this.props.user;
         return (
-            <div>
+            <div className = 'main_dashboard-container'>
                 <NavBar />
+                <div className = 'main_dashboard-content'>
                 <div className='user-container'>
                     <h4>User profile:</h4>
                     {user.userid ? <img className='avatar' src={user.img} alt='pic' /> : null}
                     <p>Name: {user.userid ? user.user_name : null} </p>
                     <p>Email: {user.userid ? user.email : null}</p>
-                </div>
-
                 <div className = 'order-history-container'>
                 <div className = 'order-container'>
 
                 </div>
                 </div>
+                </div>
+                </div>
+
+                <div className ='spacer'></div>
                 <BottomNav />
             </div>
         )

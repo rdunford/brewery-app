@@ -5,7 +5,7 @@ class BottomNav extends Component {
 
     render() {
         return (
-                <div className='bottom-info'>
+                <div id = 'bottomNav' className='bottom-info'>
                     <ul className='info-items'>
                         <li>Mad Macey Brewery</li>
                         <li>Phone:(530)-555-5555</li>

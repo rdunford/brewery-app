@@ -95,9 +95,83 @@ passport.deserializeUser(function (id, done) {
 app.get('/api/productInventory', (req, res, next) => {
     req.app.get('db').get_inventory()
         .then(inventory => {
-            res.status(200).send(inventory)
+            let correct = inventory.map(item => {
+                //This needs to be converted to pennies to eliminate the
+                //the need for the converation to number issue. pennies / 100
+                item.price = Number(item.price);
+                return item
+            })
+            // console.log(typeof correct[0].price)
+            res.status(200).send(correct)
         }).catch(err => console.log(err));
 });
+
+app.get('/api/productInventory/:category', (req, res, next) => {
+    // This console long is checking for what is being passing from the axios call
+    // the category is part of the URL so it needs to be on params
+    // console.log(req.params.category)
+    req.app.get('db').get_inventory_by_category([req.params.category])
+        .then(category => {
+            res.status(200).send(category)
+        }).catch(err => console.log(err));
+});
+
+// BEER TABLE ENDPOINT
+app.get('/api/beerInventory', (req, res, next) =>{
+    req.app.get('db').get_beers()
+    .then(beers => {
+        res.status(200).send(beers)
+    }).catch(err => console.log(err));
+});
+
+// EVENTS TABLE ENDPOINT
+app.get('/api/eventListings', (req, res, next) =>{
+    req.app.get('db').get_events()
+    .then(events => {
+        res.status(200).send(events)
+    }).catch(err => console.log(err));
+});
+
+// STRIPE ENPOINT
+app.post('/api/payment', function (req, res, next) {
+    //convert amount to pennies
+    const amountArray = req.body.amount.toString().split('');
+    const pennies = [];
+    for (var i = 0; i < amountArray.length; i++) {
+        if (amountArray[i] === ".") {
+            if (typeof amountArray[i + 1] === "string") {
+                pennies.push(amountArray[i + 1]);
+            } else {
+                pennies.push("0");
+            }
+            if (typeof amountArray[i + 2] === "string") {
+                pennies.push(amountArray[i + 2]);
+            } else {
+                pennies.push("0");
+            }
+            break;
+        } else {
+            pennies.push(amountArray[i])
+        }
+    }
+    const convertedAmt = parseInt(pennies.join(''));
+
+    const charge = stripe.charges.create({
+        amount: convertedAmt, // amount in cents, again
+        currency: 'usd',
+        source: req.body.token.id,
+        description: 'Test charge from react app'
+    }, function (err, charge) {
+        if (err) return res.sendStatus(500)
+        return res.sendStatus(200);
+        // if (err && err.type === 'StripeCardError') {
+        //   // The card has been declined
+        // }
+    });
+});
+
+
+
 
 // NODEMON 
 const PORT = 3005;

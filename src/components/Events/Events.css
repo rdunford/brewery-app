@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Rock+Salt');
+
+.main_event-content{
+    -webkit-box-shadow:inset 0 0 666px 0 #000000;
+    box-shadow:inset 0 0 666px 0 #000000;
+}
+
+.event-container{
+
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.event-item{
+    flex-flow: row wrap;
+    align-items: baseline;
+    width:100%;
+    height: 25%;
+    justify-content: space-around;
+    font-family: Tahoma, sans-serif;
+    margin-bottom: 45px;
+    margin-left: 10px;
+    padding-left: 10px;
+}
+.event-item h5{
+    margin: 0;
+}
+
+.event-item h2{
+    letter-spacing: 1.5px;
+    font-family: 'Rock Salt', tahoma, sans-serif;
+    position: center;
+
+}
+.event_item-img{
+    height: 100px;
+    width: 100px;
+    float: left;
+    padding-right: 5px;
+}
+
+.header-info{
+    justify-content: flex-start;
+    font-family: 'Rock Salt', tahoma, sans-serif;
+}
+
+.event-info{
+    font-family: tahoma, sans-serif;
+    padding-left: 5px;
+}

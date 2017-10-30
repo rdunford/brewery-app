@@ -3,69 +3,72 @@ import React, { Component } from 'react';
 import './Beer.css';
 import NavBar from '../NavBar/NavBar';
 import BottomNav from '../NavBar/BottomNav';
+import { connect } from 'react-redux';
+import { getBeerInventory } from '../../ducks/reducer';
 
 class Beer extends Component {
 
+    componentDidMount() {
+        this.props.getBeerInventory();
+    }
 
 
     render() {
+
+        const beerListing = this.props.beer.map((element, index) => {
+            return (
+                <div className='beer-item' key={index}>
+                    <h2>{element.beername}</h2>
+                    <img className='beer_item-img' src={element.img} alt='' />
+                    <h3>STYLE: {element.style}</h3>
+                    <h3>ABV: {element.abv + '%'}</h3>
+                    <h3>IBU: {element.ibu}</h3>
+                    <h3></h3>
+                    <h3>{element.beerdescription}</h3>
+                </div>
+            )
+        });
+
         return (
-            <div>
+            <div className='main_beer-container'>
                 <NavBar />
-                <div>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                    <h1>
-                        This is the beer products about page.
-                    </h1>
-                </div>
-                <div>
-                    Test area
-                </div>
-                <div className='bottom-info'>
-                    <ul className='info-items'>
-                        <li>Mad Macey Brewery</li>
-                        <li>Phone:(530)-555-5555</li>
-                        <li>Address: 5555 Bracteole Rd Meadow Vista, CA 95722</li>
-                        <li>Open Monday - Sunday</li>
-                        <li>Hours: 12pm - 9pm</li>
-                        <li>Last Call @ 8:45pm</li>
-                    </ul>
+                <div className='main_beer-content'>
+                    <div id = 'information-right' className='information-right'>
+                        <div className='pouring-hours'>
+                            <h2> Pouring Hours: </h2>
+                            <ul className='hours-list'>
+                                <ul>Mon     12:00 - 8:45</ul>
+                                <ul>Tues   12:00 - 8:45</ul>
+                                <ul>Wed 12:00 - 8:45</ul>
+                                <ul>Thurs  12:00 - 8:45</ul>
+                                <ul>Fri    12:00 - 8:45</ul>
+                                <ul>Sat  12:00 - 8:45</ul>
+                                <ul>Sun    12:00 - 8:45</ul>
+                            </ul>
+                        </div>
+                        <div id = 'tap-beers' className='tap-beers'>
+                                <h2>BEERS ON TAP:</h2>
+                            <ul className = 'on_tap-list'>
+                                <ul>MVP</ul>
+                                <ul>MAD MACEY</ul>
+                                <ul>New California Republic</ul>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className='beer-container' >
+                        {beerListing}
+                    </div>
+                    <div className='spacer'></div>
+                    <BottomNav />
                 </div>
             </div>
         )
     }
 }
+function mapStateToProps(state) {
+    return {
+        beer: state.beer
+    }
+}
 
-export default Beer;
+export default connect(mapStateToProps, { getBeerInventory })(Beer);

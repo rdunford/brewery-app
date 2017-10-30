@@ -2,59 +2,134 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './StoreFront.css';
 import NavBar from '../NavBar/NavBar';
-
-import { getInventory, addToCart } from '../../ducks/reducer';
+import BottomNav from '../NavBar/BottomNav'
+import StripeCheckout from 'react-stripe-checkout';
+import { getInventory, addToCart, removeFromCart ,getCategoryInventory, getUserInfo, emptyCart } from '../../ducks/reducer';
+import axios from 'axios';
+import stripeKey from './stripeKey'
 
 class StoreFront extends Component {
+    constructor() {
+        super();
+        this.state = {
+            expanded: false
+        }
+        this.toggleCartDetails = this.toggleCartDetails.bind(this);
+    }
 
     componentDidMount() {
         this.props.getInventory();
+        this.props.getUserInfo();
+    }
+
+    toggleCartDetails() {
+        this.setState({ expanded: !this.state.expanded })
+    }
+
+    // Stripe Token Services
+    OnToken = (token) => {
+        token.card = void 0;
+        axios.post('http://localhost:3005/api/payment', { token, amount: 100 }).then(response => {
+            alert('Thank you for your business.')
+        });
     }
 
     render() {
-        // console.log(this.props.inventory)
-        const inventoryItem = this.props.inventory.map((element, index) => {
+        const isLoggedIn = this.props.user.userid;
+
+        // Maps the items in the cart redux state, used to displaying the items in the cart summary
+        const cartItems = this.props.cart.map((element, index) => {
             return (
-                <div className='product-container' key={index}>
-                    <h2>{element.productname}</h2>
-                    <img className='product-img' scr={element.img} alt='' />
-                    <h2>{element.description}</h2>
-                    <h3>{'$' + element.price}</h3>
-                    <button className='addToCartBtn' onClick={() => this.props.addToCart(element)} >Add Item</button>
+                <div className='cartMenu-container' key={index}>
+                    <div>{element.productname}</div>
+                    <img className='cartMenu-img' src={element.img} alt='' />
+                    <div>{'$' + element.price}</div>
+                    <button className = 'removeItem' onClick = {() => this.props.removeFromCart()}>REMOVE</button>
                 </div>
             )
         })
+        // Shows the number of items currently in the cart summary
+        const cartQuantity = this.props.cart.length;
+        //Testing for price and why it is showing as a string from database
+        // var test = 23.44;
+        // console.log(typeof test);
+
+        // Displayed total price in the cart summary
+        const totalCartPrice = this.props.cart.reduce((total, item) => total + parseFloat(item.price), 0).toFixed(2);
+        // console.log(this.props.cart, 'this is the cart')
+        // console.log(this.props.cart.price, 'this is the price')
+        // console.log(typeof totalCartPrice)
+
+        //Used to display the inventory upon entering the store component
+        const inventoryItem = this.props.inventory.map((element, index) => {
+            //This console log is here because the database was store price as a num 
+            // but returning it as a string
+            // console.log(typeof element.price)
+            return (
+                <div className='product-container' key={index}>
+                    <h2>{element.productname}</h2>
+                    <img className='product-img' src={element.img} alt='' />
+                    <h5>{element.description}</h5>
+                    <h3>{'$' + element.price}</h3>
+                    <h3></h3>
+                    <button className='addToCartBtn' onClick={() => this.props.addToCart(element)} >ADD TO CART</button>
+                </div>
+            )
+        });
 
         return (
-            <div>
+            <div className='main-page'>
                 <NavBar />
+                <div className = 'main_store-content'>
+                {/* Menu to allow user to show inventory based upon category */}
                 <div className='category-container'>
                     <ul className='categories'>
-                        <li>Shirts</li>
-                        <li>Hats</li>
-                        <li>Hoodies</li>
-                        <li>Glassware</li>
-                        <li>Misc</li>
+                        <li className='shirt' onClick={() => this.props.getCategoryInventory('shirt')}>SHIRTS</li>
+                        <li className='hat' onClick={() => this.props.getCategoryInventory('hat')}>HATS</li>
+                        <li className='hoodie' onClick={() => this.props.getCategoryInventory('hoodie')}>HOODIES</li>
+                        <li className='glassware' onClick={() => this.props.getCategoryInventory('glassware')}>GLASSWARE</li>
+                        <li className='misc' onClick={() => this.props.getCategoryInventory('misc')}>MISC</li>
                     </ul>
+
+
+                    {/* Quick visual cart summary and allows drop down for more detailed summary + checkout */}
+                    {this.state.expanded ?
+
+                        <div className='cart_open-container'>
+                            <div onClick={() => this.toggleCartDetails()} className='cart_open-header'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
+                            <div id='dropDownCart' className='dropDown-items'>
+                                <div id = 'clear-cart' className = 'clear-cart' onClick = {() => this.props.emptyCart()} >| Clear |</div>
+                                {cartItems}
+                                <div id = 'stripeBtn' className = 'checkoutBtn'>
+                                    <StripeCheckout
+                                        token={this.token}
+                                        stripeKey={stripeKey}
+                                        amount={totalCartPrice * 100}
+                                        />
+                                    {/* {isLoggedIn ? thing.thing
+                                    :
+                                     window.alert('Please Log In')
+                                    } */}
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        :
+
+                        <div className='cart-container' >
+                            <div onClick={() => this.toggleCartDetails()} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
+                        </div>
+                    }
                 </div>
 
+                {/* Renders the inventory desired */}
                 <div className='storefront-container'>
                     {inventoryItem}
                 </div>
 
-                <div className = 'cart-container'>
-                    
-                </div>
-
-                <div className='bottom-info'>
-                    <ul className='info-items'>
-                        <ul>Mad Macey Brewery</ul>
-                        <ul>Phone:(530)-555-5555</ul>
-                        <ul>Address: 5555 Bracteole Rd Meadow Vista, CA 95722</ul>
-                        <ul>Open Monday - Sunday</ul>
-                        <ul>Hours: 12pm - 9pm</ul>
-                        <ul>Last Call @ 8:45pm</ul>
-                    </ul>
+                <div className='spacer'></div>
+                <BottomNav />
                 </div>
             </div>
         )
@@ -63,8 +138,10 @@ class StoreFront extends Component {
 
 function mapStateToProps(state) {
     return {
-        inventory: state.inventory
+        inventory: state.inventory,
+        cart: state.cart,
+        user: state.user
     }
 }
 
-export default connect(mapStateToProps, { getInventory, addToCart })(StoreFront);
+export default connect(mapStateToProps, { getUserInfo, getInventory, addToCart, getCategoryInventory, removeFromCart, emptyCart })(StoreFront);

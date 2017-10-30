@@ -7,7 +7,7 @@ import Beer from './components/Beer/Beer';
 import Events from './components/Events/Events';
 import About from './components/About/About';
 import StoreFront from './components/StoreFront/StoreFront';
-import ShoppingCart from './components/ShoppingCart/ShoppingCart';
+// import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 import Dashboard from './components/Dashboard/Dashboard';
 
 export default (
@@ -19,7 +19,7 @@ export default (
             <Route component={Beer} path="/beer" />
             <Route component={Events} path='/events' />
             <Route component={About} path='/about' />
-            <Route component={ShoppingCart} path='/shoppingcart' />
+            {/* <Route component={ShoppingCart} path='/shoppingcart' /> */}
             <Route component={StoreFront} path='/storefront' />
             <Route component={Dashboard} path='/dashboard' />
         </Switch>

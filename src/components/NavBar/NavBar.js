@@ -20,7 +20,6 @@ class NavBar extends Component {
         return (
             <div className='nav-parent'>
                 <div className='logo-container'>
-                    {/* <img src = {Background} alt =''/> */}
                     <Link to='/'><img className='logo-image' src={Logo} alt='' /></Link>
                 </div>
                 <div className='navbar-links-container'>
@@ -28,10 +27,10 @@ class NavBar extends Component {
                         <div><Link to='/'>HOME</Link></div>
                         <div><Link to='/beer'>BEER</Link></div>
                         <div><Link to='/events'>EVENTS</Link></div>
-                        <div><Link to='/about'>ABOUT</Link></div>
+                        <div><Link to='/about'>OUR STORY</Link></div>
                         <div><Link to='/storefront'>STORE</Link></div>
                         {isLoggedIn ? (<div><Link to = '/dashboard'>PROFILE</Link></div>) : null}
-                        {isLoggedIn ? (<a href='http://localhost:3005/auth/logout'><div>LOG OUT</div></a>) : (<a href={process.env.REACT_APP_LOGIN}><div>LOGIN</div></a>)}
+                        {isLoggedIn ? (<a href={process.env.REACT_APP_LOGOUT}><div>LOG OUT</div></a>) : (<a href={process.env.REACT_APP_LOGIN}><div>LOGIN</div></a>)}
                     </ul>
                 </div>
             </div>
