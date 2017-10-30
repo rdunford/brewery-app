@@ -1,0 +1,1 @@
+INSERT INTO products_ordered(userid, productid) VALUES ($1, $2)

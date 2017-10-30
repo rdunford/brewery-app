@@ -4,20 +4,15 @@
     box-shadow:inset 0 0 666px 0 #000000;
 }
 .beer-container{
-    /* position: relative; */
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     align-items: flex-start;
-    /* background-color:  */
-    /* -webkit-box-shadow:inset 0 0 666px 0 #000000;
-    box-shadow:inset 0 0 666px 0 #000000; */
 }
 
 .beer-item{
     flex-flow: row wrap;
     align-items: baseline;
-    /* padding: 20px; */
     width:100%;
     height: 25%;
     justify-content: space-around;
@@ -44,11 +39,15 @@
 
 /* Information on the right */
 .information-right{
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap-reverse;
     float: right;
     width: 30vw;
     font-family: 'Rock Salt', tahoma, sans-serif;
     letter-spacing: 2px;
     margin-right: 10px;
+    padding-right: 1%;
 }
 .pouring-hours h2{
     padding-left:10px;
@@ -59,9 +58,10 @@
 /* Pouring Hours */
 .pouring-hours{
     color: #3e3d3d;
+    width: 70%;
     float: right;
     margin-top: 15px;
-    padding-right: 20%;
+    padding-right: 0;
     padding-top: 0;
     font-family: 'Rock Salt', tahoma, sans-serif;
     letter-spacing: 2px;
@@ -80,11 +80,11 @@ ul{
 /* Beer Tap List */
 #tap-beers{
     color: #3e3d3d;
+    width: 70%;
     float: right;
-    width: auto;
     margin-top: 20px;
     margin-right: 0;
-    padding-right: 25px;
+    padding-right: 0;
     /* padding-top: 10%; */
     font-family: 'Rock Salt', tahoma, sans-serif, bold;
     letter-spacing: 2px;

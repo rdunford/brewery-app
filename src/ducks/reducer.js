@@ -3,6 +3,7 @@ import axios from 'axios'
 //STATE
 const initalState = {
     user: {},
+    userOrders: [],
     inventory: [],
     cart: [],
     beer: [],
@@ -18,6 +19,8 @@ const GET_INVENTORY_CATEGORY = 'GET_INVENTORY_CATEGORY';
 const GET_BEER_INVENTORY = 'GET_BEER_INVENTORY';
 const GET_EVENTS = 'GET_EVENTS';
 const EMPTY_CART = 'EMPTY_CART';
+const GET_USER_ORDERS = 'GET_USER_ORDERS';
+const CHECKOUT = 'CHECKOUT';
 
 
 //REDUCER
@@ -40,6 +43,8 @@ export default function reducer(state = initalState, action) {
             removeCart.splice(action.payload, 1);
             return Object.assign({}, state, { cart: removeCart });
         case EMPTY_CART:
+            return Object.assign({}, state, { cart: action.payload });
+        case CHECKOUT:
             return Object.assign({}, state, { cart: action.payload });
         // BEER COMPONENT
         case GET_BEER_INVENTORY + '_FULFILLED':
@@ -126,6 +131,24 @@ export function emptyCart() {
     const empty = []
     return {
         type: EMPTY_CART,
+        payload: empty
+    }
+}
+
+export function getUserOrders() {
+    const userOrders = axios.get('/api/ordersByUser').then(res => {
+        return res.data;
+    });
+    return {
+        type: GET_USER_ORDERS,
+        payload: userOrders
+    }
+}
+
+export function checkout() {
+    let empty = [];
+    return {
+        type: CHECKOUT,
         payload: empty
     }
 }

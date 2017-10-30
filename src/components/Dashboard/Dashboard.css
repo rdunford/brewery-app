@@ -1,6 +1,11 @@
 .main_dashboard-content{
     -webkit-box-shadow:inset 0 0 666px 0 #000000;
     box-shadow:inset 0 0 666px 0 #000000;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
 }
 
 .avatar {

@@ -97,11 +97,11 @@
     width: 100px;
     height: 100px;
 }
+
 .addToCartBtn{
     -webkit-box-shadow:inset 0 0 2px 0 #000000;
     box-shadow:inset 0 0 0px 0 #18121248;
     border-radius: 10px;
-    
 }
 
 .checkoutBtn{
@@ -109,6 +109,11 @@
     align-self: flex-end;
     padding-bottom: 5px;
     padding-top: 5px;
+}
+
+.bottom-of-cart{
+    position: flex;
+    width: 100%
 }
 
 .cart-container{
@@ -127,6 +132,7 @@
     letter-spacing: 1px;
     padding-right: 3vw;
 }
+
 .cart-summary:hover{
     color:#fc032c;
 }

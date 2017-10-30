@@ -4,7 +4,7 @@ import './StoreFront.css';
 import NavBar from '../NavBar/NavBar';
 import BottomNav from '../NavBar/BottomNav'
 import StripeCheckout from 'react-stripe-checkout';
-import { getInventory, addToCart, removeFromCart ,getCategoryInventory, getUserInfo, emptyCart } from '../../ducks/reducer';
+import { getInventory, addToCart, removeFromCart, getCategoryInventory, getUserInfo, emptyCart, checkout } from '../../ducks/reducer';
 import axios from 'axios';
 import stripeKey from './stripeKey'
 
@@ -27,14 +27,24 @@ class StoreFront extends Component {
     }
 
     // Stripe Token Services
-    OnToken = (token) => {
+    onToken = (token) => {
+        const cart = this.props.cart;
+        const userid_order = this.props.user.userid;
+        console.log(userid_order, 'this is user id being passed')
+        this.props.checkout()
+
         token.card = void 0;
-        axios.post('http://localhost:3005/api/payment', { token, amount: 100 }).then(response => {
+        axios.post('/api/payment', { token, amount: 100 }).then(response => {
+            this.props.checkout()
             alert('Thank you for your business.')
+            axios.post('/api/order', {cart, userid_order})
+
         });
     }
 
     render() {
+        console.log(this.props.cart, 'this is the current cart')
+        console.log(this.props.user.userid, 'this is the user id')
         const isLoggedIn = this.props.user.userid;
 
         // Maps the items in the cart redux state, used to displaying the items in the cart summary
@@ -44,7 +54,7 @@ class StoreFront extends Component {
                     <div>{element.productname}</div>
                     <img className='cartMenu-img' src={element.img} alt='' />
                     <div>{'$' + element.price}</div>
-                    <button className = 'removeItem' onClick = {() => this.props.removeFromCart()}>REMOVE</button>
+                    <button className='removeItem' onClick={() => this.props.removeFromCart()}>REMOVE</button>
                 </div>
             )
         })
@@ -80,56 +90,53 @@ class StoreFront extends Component {
         return (
             <div className='main-page'>
                 <NavBar />
-                <div className = 'main_store-content'>
-                {/* Menu to allow user to show inventory based upon category */}
-                <div className='category-container'>
-                    <ul className='categories'>
-                        <li className='shirt' onClick={() => this.props.getCategoryInventory('shirt')}>SHIRTS</li>
-                        <li className='hat' onClick={() => this.props.getCategoryInventory('hat')}>HATS</li>
-                        <li className='hoodie' onClick={() => this.props.getCategoryInventory('hoodie')}>HOODIES</li>
-                        <li className='glassware' onClick={() => this.props.getCategoryInventory('glassware')}>GLASSWARE</li>
-                        <li className='misc' onClick={() => this.props.getCategoryInventory('misc')}>MISC</li>
-                    </ul>
+                <div className='main_store-content'>
+                    {/* Menu to allow user to show inventory based upon category */}
+                    <div className='category-container'>
+                        <ul className='categories'>
+                            <li className='shirt' onClick={() => this.props.getCategoryInventory('shirt')}>SHIRTS</li>
+                            <li className='hat' onClick={() => this.props.getCategoryInventory('hat')}>HATS</li>
+                            <li className='hoodie' onClick={() => this.props.getCategoryInventory('hoodie')}>HOODIES</li>
+                            <li className='glassware' onClick={() => this.props.getCategoryInventory('glassware')}>GLASSWARE</li>
+                            <li className='misc' onClick={() => this.props.getCategoryInventory('misc')}>MISC</li>
+                        </ul>
 
 
-                    {/* Quick visual cart summary and allows drop down for more detailed summary + checkout */}
-                    {this.state.expanded ?
+                        {/* Quick visual cart summary and allows drop down for more detailed summary + checkout */}
+                        {this.state.expanded ?
 
-                        <div className='cart_open-container'>
-                            <div onClick={() => this.toggleCartDetails()} className='cart_open-header'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
-                            <div id='dropDownCart' className='dropDown-items'>
-                                <div id = 'clear-cart' className = 'clear-cart' onClick = {() => this.props.emptyCart()} >| Clear |</div>
-                                {cartItems}
-                                <div id = 'stripeBtn' className = 'checkoutBtn'>
-                                    <StripeCheckout
-                                        token={this.token}
-                                        stripeKey={stripeKey}
-                                        amount={totalCartPrice * 100}
-                                        />
-                                    {/* {isLoggedIn ? thing.thing
-                                    :
-                                     window.alert('Please Log In')
-                                    } */}
-                                    
+                            <div className='cart_open-container'>
+                                <div onClick={() => this.toggleCartDetails()} className='cart_open-header'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
+                                <div id='dropDownCart' className='dropDown-items'>
+                                    {cartItems}
+                                    <div className='bottom-of-cart'>
+                                        <div id='clear-cart' className='clear-cart' onClick={() => this.props.emptyCart()} >| Clear |</div>
+                                        <div id='stripeBtn' className='checkoutBtn'>
+                                            <StripeCheckout
+                                                token={this.onToken}
+                                                stripeKey={stripeKey}
+                                                amount={totalCartPrice * 100}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        :
+                            :
 
-                        <div className='cart-container' >
-                            <div onClick={() => this.toggleCartDetails()} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
-                        </div>
-                    }
-                </div>
+                            <div className='cart-container' >
+                                <div onClick={() => this.toggleCartDetails()} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
+                            </div>
+                        }
+                    </div>
 
-                {/* Renders the inventory desired */}
-                <div className='storefront-container'>
-                    {inventoryItem}
-                </div>
+                    {/* Renders the inventory desired */}
+                    <div className='storefront-container'>
+                        {inventoryItem}
+                    </div>
 
-                <div className='spacer'></div>
-                <BottomNav />
+                    <div className='spacer'></div>
+                    <BottomNav />
                 </div>
             </div>
         )
@@ -144,4 +151,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getUserInfo, getInventory, addToCart, getCategoryInventory, removeFromCart, emptyCart })(StoreFront);
+export default connect(mapStateToProps, { getUserInfo, getInventory, addToCart, getCategoryInventory, removeFromCart, emptyCart, checkout })(StoreFront);
