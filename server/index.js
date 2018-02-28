@@ -42,14 +42,13 @@ passport.use(new Auth0Strategy({
     const db = app.get('db');
 
     // Database calls go here for logging in
-
     db.find_user([profile.identities[0].user_id]).then(dbUser => {
         // console.log(profile, 'This is the user profile')
         if (dbUser[0]) {
             done(null, dbUser[0].userid)
         } else {
             const user = profile._json;
-            db.create_user([user.name, user.email, user.picture, user.identities[0].user_id])
+            db.create_user([user.name, user.email, user.picture,user.identities[0].user_id])
                 .then(user => {
                     done(null, user[0].user_id)
                 });
@@ -57,6 +56,8 @@ passport.use(new Auth0Strategy({
     });
     // done(null, profile);
 }));
+
+
 
 // AUTH0 ENDPOINTS
 app.get('/auth', passport.authenticate('auth0'));
@@ -71,13 +72,13 @@ app.get('/auth/me', (req, res, next) => {
         return res.status(200).send(false)
     }
     return res.status(200).send(req.user)
-})
+});
 
 // User logs out, no longer on the session
 app.get('/auth/logout', (req, res, next) => {
     req.logOut();
     res.redirect(302, 'http://localhost:3000/home/')
-})
+});
 
 // SERIAL-USER
 passport.serializeUser(function (id, done) {
@@ -86,8 +87,19 @@ passport.serializeUser(function (id, done) {
 
 // DESERIALIZE-USER
 passport.deserializeUser(function (id, done) {
+    // console.log('this is deserialize', id)
+    // console.log('before', id);
+    // app.get('db').check_user_admin([id]).then(resp =>{
+    //     if(resp[0]){
+    //         id.isAdmin = true;
+    //     }else{
+    //         id.isAdmin = false;
+    //     }
+    // })
+    // console.log('after', id)
     app.get('db').find_current_user([id])
-        .then(user => {
+    .then(user => {
+            console.log('user in deserialize:', user);
             done(null, user[0])
         });
 });
@@ -200,4 +212,4 @@ app.post('/api/payment', function (req, res, next) {
 
 // NODEMON 
 const PORT = 3005;
-app.listen(PORT, () => console.log(`Pouring beers for all ${PORT} patrons.`))
+app.listen(PORT, () => console.log(`${new Date()} Pouring beers for all ${PORT} patrons.`))

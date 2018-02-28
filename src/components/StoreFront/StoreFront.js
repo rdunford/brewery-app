@@ -7,6 +7,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import { getInventory, addToCart, removeFromCart, getCategoryInventory, getUserInfo, emptyCart, checkout } from '../../ducks/reducer';
 import axios from 'axios';
 import stripeKey from './stripeKey'
+import Drawer from 'react-motion-drawer';
 
 class StoreFront extends Component {
     constructor() {
@@ -26,6 +27,7 @@ class StoreFront extends Component {
         this.setState({ expanded: !this.state.expanded })
     }
 
+
     // Stripe Token Services
     onToken = (token) => {
         const cart = this.props.cart;
@@ -37,15 +39,16 @@ class StoreFront extends Component {
         axios.post('/api/payment', { token, amount: 100 }).then(response => {
             this.props.checkout()
             alert('Thank you for your business.')
-            axios.post('/api/order', {cart, userid_order})
+            axios.post('/api/order', { cart, userid_order })
 
         });
     }
 
     render() {
-        console.log(this.props.cart, 'this is the current cart')
-        console.log(this.props.user.userid, 'this is the user id')
-        const isLoggedIn = this.props.user.userid;
+        // console.log(this.props.cart, 'this is the current cart')
+        // console.log(this.props.user.userid, 'this is the user id')
+
+        // const isLoggedIn = this.props.user.userid;
 
         // Maps the items in the cart redux state, used to displaying the items in the cart summary
         const cartItems = this.props.cart.map((element, index) => {
@@ -81,7 +84,6 @@ class StoreFront extends Component {
                     <img className='product-img' src={element.img} alt='' />
                     <h5>{element.description}</h5>
                     <h3>{'$' + element.price}</h3>
-                    <h3></h3>
                     <button className='addToCartBtn' onClick={() => this.props.addToCart(element)} >ADD TO CART</button>
                 </div>
             )
@@ -100,7 +102,6 @@ class StoreFront extends Component {
                             <li className='glassware' onClick={() => this.props.getCategoryInventory('glassware')}>GLASSWARE</li>
                             <li className='misc' onClick={() => this.props.getCategoryInventory('misc')}>MISC</li>
                         </ul>
-
 
                         {/* Quick visual cart summary and allows drop down for more detailed summary + checkout */}
                         {this.state.expanded ?

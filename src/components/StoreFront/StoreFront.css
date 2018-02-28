@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Patua+One');
+
 .main_store-content{
     -webkit-box-shadow:inset 0 0 666px 0 #000000;
     box-shadow:inset 0 0 666px 0 #000000;
@@ -8,6 +9,7 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    overflow: hidden;
 }
 
  .product-img{
@@ -15,16 +17,16 @@
     width: 200px;
     object-fit: scale-down;
 }
+
 .storefront-container h3 {
     font-size: 24px;
-
 } 
 
 .product-container{
     flex-flow: row wrap;
     align-items: baseline;
     padding: 20px;
-    width:30%;
+    width: 30%;
     height: 25%;
     justify-content: space-around;
     font-family: 'Patua One', sans-serif, tahoma;

@@ -10,8 +10,8 @@ const initalState = {
     events: []
 }
 
+// ACTION TYPES
 const GET_USER_INFO = 'GET_USER_INFO';
-const GET_PRODUCT_INFO = 'GET_PRODUCT_INFO';
 const GET_INVENTORY = 'GET_INVENTORY';
 const ADD_TO_CART = 'ADD_TO_CART';
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART';

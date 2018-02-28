@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import NavBar from '../NavBar/NavBar';
-import BottomNav from '../NavBar/BottomNav';
 import './Home.css';
 import video from './Cable_Car.mp4'
 

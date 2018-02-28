@@ -16,8 +16,8 @@
 .env.test.local
 .env.production.local
 .env
-./stripeKey.js
-
+/components/StoreFront/stripeKey.js
+/components/About/googlekey.js
 
 npm-debug.log*
 yarn-debug.log*

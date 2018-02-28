@@ -1,0 +1,1 @@
+select * from users where admin = true and userid = $1;

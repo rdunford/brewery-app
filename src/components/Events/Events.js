@@ -5,6 +5,8 @@ import NavBar from '../NavBar/NavBar';
 import BottomNav from '../NavBar/BottomNav';
 import { connect } from 'react-redux';
 import { getEvents, getUserInfo } from '../../ducks/reducer';
+import "./../../animate.css";
+import ScrollAnimation from 'react-animate-on-scroll'
 
 class Events extends Component {
 
@@ -13,10 +15,13 @@ class Events extends Component {
         this.props.getUserInfo()
     }
 
+    isUserLoggedIn() {
+
+    }
 
     render() {
 
-        const isLoggedIn = this.props.user.userid;
+        // const isLoggedIn = this.props.user.userid;
 
         const eventList = this.props.events.map((element, index) => {
             return (
@@ -56,14 +61,16 @@ class Events extends Component {
                         </div>
                     </div>
                     <div className='event-container' >
-                        <div className = 'header-info'><h1>EVENTS</h1></div>
-                        <div className = 'event-info'>We can open the brewery for private parties or 
+                        <div className='header-info-events'><h1>EVENTS</h1></div>
+                        <div className='event-info'>We can open the brewery for private parties or
                             events during non-operating hours (Sunday after 6pm & Monday – Wednesday)
-                            If you’re interested and would like more information please call the brewery at (530)555-5555 – 
-                            If we don’t pick up please leave a message!<br/>
-                            <br/>
+                            If you’re interested and would like more information please call the brewery at (530)555-5555 –
+                            If we don’t pick up please leave a message!<br />
+                            <br />
                             Here is an up to date listing of our public events:</div>
-                        {eventList}
+                        <ScrollAnimation offset={75} duration={.73} animateIn='fadeInLeft'>
+                            {eventList}
+                        </ScrollAnimation>
                     </div>
                     <div className='spacer'></div>
                     <BottomNav />
