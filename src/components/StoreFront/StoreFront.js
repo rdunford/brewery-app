@@ -115,7 +115,7 @@ class StoreFront extends Component {
                                         <div id='stripeBtn' className='checkoutBtn'>
                                             <StripeCheckout
                                                 token={this.onToken}
-                                                stripeKey={process.env.stripeKey}
+                                                stripeKey={process.env.STRIPEKEY}
                                                 amount={totalCartPrice * 100}
                                             />
                                         </div>
