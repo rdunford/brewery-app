@@ -4,7 +4,7 @@ const express = require('express')
     , massive = require('massive')
     , bodyParser = require('body-parser')
     , passport = require('passport')
-    , Auth0Strategy = require('passport-Auth0')
+    , Auth0Strategy = require('passport-auth0')
     , cors = require('cors')
     , stripe = require('stripe')(process.env.STRIPESECRETKEY)
 
@@ -215,5 +215,4 @@ app.post('/api/payment', function (req, res, next) {
 
 
 // NODEMON 
-const PORT = 3005;
-app.listen(PORT, () => console.log(`${new Date()} Pouring beers for all ${PORT} patrons.`))
+app.listen(() => console.log(`${new Date()} Pouring beers for all ${process.env.PORT} patrons.`))
