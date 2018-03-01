@@ -107,7 +107,7 @@ class StoreFront extends Component {
                         {this.state.open ?
 
                             <div className='cart_open-container'>
-                                <div onClick={() => this.toggleCartDetails()} className='cart_open-header'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
+                                <div onClick={() => this.toggleCartModal()} className='cart_open-header'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
                                 <div id='dropDownCart' className='dropDown-items'>
                                     {cartItems}
                                     <div className='bottom-of-cart'>
@@ -126,13 +126,12 @@ class StoreFront extends Component {
                             :
 
                             <div className='cart-container' >
-                                <div onClick={() => this.toggleCartDetails()} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
+                                <div onClick={() => this.toggleCartModal()} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
                             </div> 
                          }
-                        <div className='cart-container' >
+                        {/* <div className='cart-container' >
                             <div onClick={this.toggleCartModal} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
-                            {cartItems}
-                        </div>
+                        </div> */}
                         {/* <Modal big closeOnEsc open={open} onClose={this.toggleCartModal}> */}
                         {/* </Modal> */}
                     </div>
