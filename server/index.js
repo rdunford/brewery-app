@@ -62,7 +62,7 @@ passport.use(new Auth0Strategy({
 // AUTH0 ENDPOINTS
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/dashboard/',
+    successRedirect: process.env.DASHBOARD,
     failureRedirect: '/auth'
 }));
 
@@ -77,7 +77,7 @@ app.get('/auth/me', (req, res, next) => {
 // User logs out, no longer on the session
 app.get('/auth/logout', (req, res, next) => {
     req.logOut();
-    res.redirect(302, 'http://localhost:3000/home/')
+    res.redirect(302, process.env.AUTH_REDIRECT_LOGOUT)
 });
 
 // SERIAL-USER
