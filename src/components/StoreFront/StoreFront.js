@@ -6,16 +6,15 @@ import BottomNav from '../NavBar/BottomNav'
 import StripeCheckout from 'react-stripe-checkout';
 import { getInventory, addToCart, removeFromCart, getCategoryInventory, getUserInfo, emptyCart, checkout } from '../../ducks/reducer';
 import axios from 'axios';
-import stripeKey from './stripeKey'
-import Drawer from 'react-motion-drawer';
+import Modal from 'react-responsive-modal';
 
 class StoreFront extends Component {
     constructor() {
         super();
         this.state = {
-            expanded: false
+            open: false
         }
-        this.toggleCartDetails = this.toggleCartDetails.bind(this);
+        this.toggleCartModal = this.toggleCartModal.bind(this);
     }
 
     componentDidMount() {
@@ -23,8 +22,8 @@ class StoreFront extends Component {
         this.props.getUserInfo();
     }
 
-    toggleCartDetails() {
-        this.setState({ expanded: !this.state.expanded })
+    toggleCartModal() {
+        this.setState({ open: !this.state.open })
     }
 
 
@@ -45,6 +44,7 @@ class StoreFront extends Component {
     }
 
     render() {
+        const { open } = this.state
         // console.log(this.props.cart, 'this is the current cart')
         // console.log(this.props.user.userid, 'this is the user id')
 
@@ -104,7 +104,7 @@ class StoreFront extends Component {
                         </ul>
 
                         {/* Quick visual cart summary and allows drop down for more detailed summary + checkout */}
-                        {this.state.expanded ?
+                        {this.state.open ?
 
                             <div className='cart_open-container'>
                                 <div onClick={() => this.toggleCartDetails()} className='cart_open-header'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
@@ -115,7 +115,7 @@ class StoreFront extends Component {
                                         <div id='stripeBtn' className='checkoutBtn'>
                                             <StripeCheckout
                                                 token={this.onToken}
-                                                stripeKey={stripeKey}
+                                                stripeKey={process.env.stripeKey}
                                                 amount={totalCartPrice * 100}
                                             />
                                         </div>
@@ -127,15 +127,20 @@ class StoreFront extends Component {
 
                             <div className='cart-container' >
                                 <div onClick={() => this.toggleCartDetails()} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
-                            </div>
-                        }
+                            </div> 
+                         }
+                        <div className='cart-container' >
+                            <div onClick={this.toggleCartModal} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
+                            {cartItems}
+                        </div>
+                        {/* <Modal big closeOnEsc open={open} onClose={this.toggleCartModal}> */}
+                        {/* </Modal> */}
                     </div>
 
                     {/* Renders the inventory desired */}
                     <div className='storefront-container'>
                         {inventoryItem}
                     </div>
-
                     <div className='spacer'></div>
                     <BottomNav />
                 </div>

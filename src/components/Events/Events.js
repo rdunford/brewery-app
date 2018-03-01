@@ -68,9 +68,9 @@ class Events extends Component {
                             If we don’t pick up please leave a message!<br />
                             <br />
                             Here is an up to date listing of our public events:</div>
-                        <ScrollAnimation offset={75} duration={.73} animateIn='fadeInLeft'>
+                            
                             {eventList}
-                        </ScrollAnimation>
+
                     </div>
                     <div className='spacer'></div>
                     <BottomNav />

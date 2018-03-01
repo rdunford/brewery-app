@@ -18,7 +18,7 @@ class Beer extends Component {
 
         const beerListing = this.props.beer.map((element, index) => {
             return (
-                <Reveal effect='fadeInUp' effectOut='fadeOutLeft'>
+                <Reveal effect='fadeInLeft' effectOut='fadeOutLeft'>
                 <div className='beer-item' key={index}>
                     <h2>{element.beername}</h2>
                     <img className='beer_item-img' src={element.img} alt='' />
