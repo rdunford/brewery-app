@@ -11,6 +11,9 @@ const express = require('express')
 // EXPRESS
 const app = express();
 
+// Points the user to the resources requested in the build folder
+app.use(express.static(`${__dirname}/../build`));
+
 // BODY PARSER
 app.use(bodyParser.json());
 
@@ -31,6 +34,7 @@ massive(process.env.CONNECTION_STRING).then(db => {
     app.set('db', db)
 }).catch(err => console.log(err));
 
+
 // AUTH0 STRATEGY 
 passport.use(new Auth0Strategy({
     domain: process.env.AUTH_DOMAIN,
@@ -48,7 +52,7 @@ passport.use(new Auth0Strategy({
             done(null, dbUser[0].userid)
         } else {
             const user = profile._json;
-            db.create_user([user.name, user.email, user.picture,user.identities[0].user_id])
+            db.create_user([user.name, user.email, user.picture, user.identities[0].user_id])
                 .then(user => {
                     done(null, user[0].user_id)
                 });
@@ -98,7 +102,7 @@ passport.deserializeUser(function (id, done) {
     // })
     // console.log('after', id)
     app.get('db').find_current_user([id])
-    .then(user => {
+        .then(user => {
             console.log('user in deserialize:', user);
             done(null, user[0])
         });
@@ -130,40 +134,40 @@ app.get('/api/productInventory/:category', (req, res, next) => {
 });
 
 // BEER TABLE ENDPOINT
-app.get('/api/beerInventory', (req, res, next) =>{
+app.get('/api/beerInventory', (req, res, next) => {
     req.app.get('db').get_beers()
-    .then(beers => {
-        res.status(200).send(beers)
-    }).catch(err => console.log(err));
+        .then(beers => {
+            res.status(200).send(beers)
+        }).catch(err => console.log(err));
 });
 
 // EVENTS TABLE ENDPOINT
-app.get('/api/eventListings', (req, res, next) =>{
+app.get('/api/eventListings', (req, res, next) => {
     req.app.get('db').get_events()
-    .then(events => {
-        res.status(200).send(events)
-    }).catch(err => console.log(err));
+        .then(events => {
+            res.status(200).send(events)
+        }).catch(err => console.log(err));
 });
 
 // PRODUCTS ORDERED BY USER
-app.get('/api/userOrders', (req, res, next) =>{
+app.get('/api/userOrders', (req, res, next) => {
     req.app.get('db').get_user_orders(req.body.user.userid)
-    .then(orders =>{
-        res.status(200).send(orders)
-    }).catch(err => console.log(err));
+        .then(orders => {
+            res.status(200).send(orders)
+        }).catch(err => console.log(err));
 });
 
 // CART CHECKOUT
-app.post('/api/order', (req, res, next) =>{
-   const db = req.app.get('db');
+app.post('/api/order', (req, res, next) => {
+    const db = req.app.get('db');
     console.log('order endpoint hit')
     req.body.cart.forEach((item, i) => {
         db.product_upon_order([req.body.userid_order, item.productid])
-        .then(() =>{
-            if (i === req.body.cart.length - 1){
-                res.status(200).send()
-            }
-        });
+            .then(() => {
+                if (i === req.body.cart.length - 1) {
+                    res.status(200).send()
+                }
+            });
     });
 });
 
