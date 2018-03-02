@@ -21,6 +21,7 @@ const GET_EVENTS = 'GET_EVENTS';
 const EMPTY_CART = 'EMPTY_CART';
 const GET_USER_ORDERS = 'GET_USER_ORDERS';
 const CHECKOUT = 'CHECKOUT';
+const GET_EVENTS_BY_MONTH = 'GET_EVENTS_BY_MONTH';
 
 
 //REDUCER
@@ -52,6 +53,8 @@ export default function reducer(state = initalState, action) {
         // EVENT COMPONENT
         case GET_EVENTS + '_FULFILLED':
             return Object.assign({}, state, { events: action.payload });
+        case GET_EVENTS_BY_MONTH + '_FULFILLED':
+            return Object.assign({}, state, {events: action.payload});
         default:
             return state;
     }
@@ -59,7 +62,6 @@ export default function reducer(state = initalState, action) {
 
 //ACTION BUILDER
 export function getUserInfo() {
-    //Gets the user --- .then waits for the response
     const userData = axios.get('/auth/me').then(res => {
         return res.data
     });
@@ -117,13 +119,27 @@ export function getBeerInventory() {
     }
 }
 
-export function getEvents() {
-    const events = axios.get('/api/eventListings').then(res => {
+export function getEvents(month) {
+    let currentMonth = parseInt(month, 10)
+    console.log(typeof currentMonth, currentMonth);
+    const events = axios.get(`/api/eventListings/${currentMonth}`).then(res => {
         return res.data;
     });
     return {
         type: GET_EVENTS,
         payload: events
+    }
+}
+
+export function getEventsByMonth(month) {
+    let selectMonth = parseInt(month, 10);
+    console.log(typeof selectMonth, selectMonth);
+    const eventByMonth = axios.get(`/api/eventListings/${selectMonth}`).then(res => {
+        return res.data;
+    });
+    return {
+        type: GET_EVENTS_BY_MONTH,
+        payload: eventByMonth
     }
 }
 

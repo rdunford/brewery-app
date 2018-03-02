@@ -95,7 +95,7 @@ passport.deserializeUser(function (id, done) {
     // console.log('before', id);
     // app.get('db').check_user_admin([id]).then(resp =>{
     //     if(resp[0]){
-    //         id.isAdmin = true;
+    //         resp[0]id.isAdmin = true;
     //     }else{
     //         id.isAdmin = false;
     //     }
@@ -142,11 +142,30 @@ app.get('/api/beerInventory', (req, res, next) => {
 });
 
 // EVENTS TABLE ENDPOINT
-app.get('/api/eventListings', (req, res, next) => {
-    req.app.get('db').get_events()
-        .then(events => {
-            res.status(200).send(events)
-        }).catch(err => console.log(err));
+app.get('/api/eventListings/:currentMonth', (req, res, next) => {
+    req.app.get('db').get_events_by_month([req.params.currentMonth])
+        .then(eventsByMonth => {
+            // console.log(eventsByMonth)
+            res.status(200).send(eventsByMonth);
+        }).catch(err => {
+            res.status(500).send(err)
+            console.log(err)
+        });
+    // req.app.get('db').get_events()
+    //     .then(events => {
+    //         res.status(200).send(events)
+    //     }).catch(err => console.log(err));
+});
+
+app.get(`/api/eventListings/:selectedMonth`, (req, res, next) => {
+    req.app.get('db').get_events_by_month([req.params.selectedMonth])
+        .then(selectedMonthEvents => {
+            // console.log(selectedMonthEvents)
+            res.status(200).send(selectedMonthEvents);
+        }).catch(err => {
+            res.status(500).send(err)
+            console.log(err)
+        });
 });
 
 // PRODUCTS ORDERED BY USER

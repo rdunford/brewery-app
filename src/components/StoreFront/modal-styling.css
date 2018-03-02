@@ -1,0 +1,10 @@
+.custom-overlay{
+    background: rgba(0, 0, 0, 0.75) !important;
+}
+
+.custom-modal {
+    display:flex;
+    background: #fff !important;
+    max-width: 500px !important;
+    width: 100%;
+  }

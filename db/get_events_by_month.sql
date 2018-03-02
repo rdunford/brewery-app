@@ -1,0 +1,1 @@
+select * from events where eventmonth = $1;

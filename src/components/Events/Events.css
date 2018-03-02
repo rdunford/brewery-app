@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Rock+Salt');
-
+.main_event-container{
+    width:100%;
+    height: 100%;
+    -webkit-box-shadow:inset 0 0 666px 0 #000000;
+    box-shadow:inset 0 0 666px 0 #000000;
+}
 .main_event-content{
     -webkit-box-shadow:inset 0 0 666px 0 #000000;
     box-shadow:inset 0 0 666px 0 #000000;
+    height: 100%;
+    width:100%;
 }
 
 .event-container{
@@ -49,4 +56,9 @@
 .event-info{
     font-family: tahoma, sans-serif;
     padding-left: 5px;
+}
+
+.month-select{
+    height:25px;
+    width: 100px;
 }

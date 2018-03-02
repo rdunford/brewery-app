@@ -4,7 +4,6 @@ import NavBar from '../NavBar/NavBar';
 import BottomNav from '../NavBar/BottomNav';
 import Map from './map'
 import "./../../animate.css";
-import ScrollAnimation from 'react-animate-on-scroll'
 import Fade from 'react-reveal'
 
 class About extends Component {

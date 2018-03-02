@@ -31,6 +31,8 @@ class Dashboard extends Component {
                 <NavBar />
                 <div className='main_dashboard-content'>
                     <div className='user-container'>
+
+
                         <h4>User profile:</h4>
                         {user.userid ? <img className='avatar' src={user.img} alt='pic' /> : null}
                         <p>Name: {user.userid ? user.user_name : null} </p>
@@ -41,7 +43,7 @@ class Dashboard extends Component {
 
                         </div>
                     </div>
-
+                    
                 <div className='spacer'></div>
                 <div className='spacer'></div>
                 <div className='spacer'></div>

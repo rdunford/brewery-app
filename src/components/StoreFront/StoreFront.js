@@ -6,7 +6,9 @@ import BottomNav from '../NavBar/BottomNav'
 import StripeCheckout from 'react-stripe-checkout';
 import { getInventory, addToCart, removeFromCart, getCategoryInventory, getUserInfo, emptyCart, checkout } from '../../ducks/reducer';
 import axios from 'axios';
-import Modal from 'react-responsive-modal';
+import Modal from 'react-responsive-modal/lib/css';
+import Fade from 'react-reveal'
+import './modal-styling.css';
 
 class StoreFront extends Component {
     constructor() {
@@ -44,6 +46,7 @@ class StoreFront extends Component {
     }
 
     render() {
+        // console.log(this.props.user.admin)
         const { open } = this.state
         // console.log(this.props.cart, 'this is the current cart')
         // console.log(this.props.user.userid, 'this is the user id')
@@ -55,7 +58,7 @@ class StoreFront extends Component {
             return (
                 <div className='cartMenu-container' key={index}>
                     <div>{element.productname}</div>
-                    <img className='cartMenu-img' src={element.img} alt='' />
+                    <img className='cartMenu-img' src={element.img} alt='inventoryImage' />
                     <div>{'$' + element.price}</div>
                     <button className='removeItem' onClick={() => this.props.removeFromCart()}>REMOVE</button>
                 </div>
@@ -79,6 +82,7 @@ class StoreFront extends Component {
             // but returning it as a string
             // console.log(typeof element.price)
             return (
+                <Fade>
                 <div className='product-container' key={index}>
                     <h2>{element.productname}</h2>
                     <img className='product-img' src={element.img} alt='' />
@@ -86,6 +90,7 @@ class StoreFront extends Component {
                     <h3>{'$' + element.price}</h3>
                     <button className='addToCartBtn' onClick={() => this.props.addToCart(element)} >ADD TO CART</button>
                 </div>
+                </Fade>
             )
         });
 
@@ -104,7 +109,7 @@ class StoreFront extends Component {
                         </ul>
 
                         {/* Quick visual cart summary and allows drop down for more detailed summary + checkout */}
-                        {this.state.open ?
+                        {/* {this.state.open ?
 
                             <div className='cart_open-container'>
                                 <div onClick={() => this.toggleCartModal()} className='cart_open-header'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
@@ -127,19 +132,22 @@ class StoreFront extends Component {
 
                             <div className='cart-container' >
                                 <div onClick={() => this.toggleCartModal()} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
-                            </div> 
-                         }
-                        {/* <div className='cart-container' >
+                            </div>
+                        } */}
+                        <div className='cart-container' >
                             <div onClick={this.toggleCartModal} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
-                        </div> */}
-                        {/* <Modal big closeOnEsc open={open} onClose={this.toggleCartModal}> */}
-                        {/* </Modal> */}
+                        </div>
+                        <Modal big closeOnEsc open={open} onClose={this.toggleCartModal} classNames={{ overlay:'custom-overlay', modal:'custom-modal'}}>
+                        <div>Cart Details:</div>
+                        
+                         </Modal>
                     </div>
 
                     {/* Renders the inventory desired */}
                     <div className='storefront-container'>
-                        {inventoryItem}
+                            {inventoryItem}
                     </div>
+
                     <div className='spacer'></div>
                     <BottomNav />
                 </div>

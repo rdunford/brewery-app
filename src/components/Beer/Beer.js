@@ -8,6 +8,9 @@ import "./../../animate.css";
 // import ScrollAnimation from 'react-animate-on-scroll'
 import Reveal from 'react-reveal';
 
+
+
+
 class Beer extends Component {
 
     componentDidMount() {
@@ -58,11 +61,7 @@ class Beer extends Component {
                         </div>
                     </div>
                     <div className='beer-container'>
-                    {/* <ScrollAnimation offset={75} duration={.73} animateIn='fadeInLeft'> */}
-                    
                         {beerListing}
-                    
-                    {/* </ScrollAnimation> */}
                     </div>
                     <div className='spacer'></div>
                     <BottomNav />
