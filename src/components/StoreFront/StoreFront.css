@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Patua+One');
+ @import url('https://fonts.googleapis.com/css?family=Patua+One');
 
 .main_store-content{
     -webkit-box-shadow:inset 0 0 666px 0 #000000;
@@ -53,13 +53,15 @@
 }
 .clear-cart{
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 12px;
+    left: 170px;
     font-family: Tahoma, sans-serif;
     line-height: 15px;
     color: black;
 }
-
+.clear-cart:hover{
+    cursor: pointer;
+}
 .cart_open-container{
     display: flex;
     width: 50vw;
@@ -96,14 +98,14 @@
 
 .cartMenu-img{
     padding: 5px 0px 5px 0px;
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
 }
 
 .addToCartBtn{
     -webkit-box-shadow:inset 0 0 2px 0 #000000;
     box-shadow:inset 0 0 0px 0 #18121248;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .checkoutBtn{
@@ -111,12 +113,35 @@
     align-self: flex-end;
     padding-bottom: 5px;
     padding-top: 5px;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+
+}
+
+.totalPrice{
+    font-family: 'tahoma', sans-serif;
+    font-weight: bold;
+    position: absolute;
+    bottom: 8px;
+    left: 10px;
 }
 
 .bottom-of-cart{
     position: flex;
     width: 100%
 }
+
+/* .topCart{
+    width:100%;
+    height: 100%;
+    overflow: hidden;
+} */
+/* 
+.bottomCart{
+    width: 100%;
+    height:40px;
+} */
 
 .cart-container{
     display: flex;
@@ -136,15 +161,54 @@
 }
 
 .cart-summary:hover{
-    color:#fc032c;
+    color:#cc9d2a;
 }
 
 .categories > :hover{
-    color: #fc032c;
+    color: #cc9d2a;
 }
 
 .spacer{
     width:100vw;
     height: 15vh;
 
+}
+
+.cartMenu-container {
+    margin-bottom: 20px;
+    padding: 1%;
+    display:flex;
+    width: 100%;
+    align-items: center;
+}
+
+.cartItemQuantity{
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addToCart{
+    margin-left: 10px;
+    font-family: tahoma, sans-serif;
+    font-weight: bold;
+}
+
+.subFromCart{
+    margin-left: 10px;
+    font-family: tahoma, sans-serif;
+    font-weight: bold;
+}
+
+.removeItem{
+    height: 15px;
+    width: 75px;
+    margin-left: 10px;
+}
+.addToCart, .subFromCart:hover{
+    cursor: pointer;
 }

@@ -103,7 +103,7 @@ passport.deserializeUser(function (id, done) {
     // console.log('after', id)
     app.get('db').find_current_user([id])
         .then(user => {
-            console.log('user in deserialize:', user);
+            // console.log('user in deserialize:', user);
             done(null, user[0])
         });
 });
@@ -169,10 +169,11 @@ app.get(`/api/eventListings/:selectedMonth`, (req, res, next) => {
 });
 
 // PRODUCTS ORDERED BY USER
-app.get('/api/userOrders', (req, res, next) => {
-    req.app.get('db').get_user_orders(req.body.user.userid)
-        .then(orders => {
-            res.status(200).send(orders)
+app.get('/api/ordersByUser/:userId', (req, res, next) => {
+    req.app.get('db').display_user_orders([req.params.userId])
+        .then(userOrders => {
+            console.log('user orders', userOrders);
+            res.status(200).send(userOrders)
         }).catch(err => console.log(err));
 });
 

@@ -53,7 +53,7 @@ class Beer extends Component {
                         </div>
                         <div id='tap-beers' className='tap-beers'>
                             <h2>BEERS ON TAP:</h2>
-                            <ul className='on_tap-list'>
+                            <ul className='on-tap-list'>
                                 <ul>MVP</ul>
                                 <ul>MAD MACEY</ul>
                                 <ul>New California Republic</ul>

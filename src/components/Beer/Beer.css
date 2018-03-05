@@ -70,6 +70,9 @@
 }
 .hours-list{
     padding-left: 0;
+    font-family: 'tahoma', sans-serif;
+    letter-spacing: 1px;
+    font-weight: bold;
 }
 ul{
     padding-top: 20px;
@@ -91,8 +94,11 @@ ul{
     -webkit-box-shadow: 0 0 11px 2px #3e3d3d;
     box-shadow: 0 0 11px 2px #3e3d3d;
 }
-.on_tap-list{
+.on-tap-list{
     padding-left: 0;
     padding-top: 0;
+    font-family: 'tahoma', sans-serif;
+    letter-spacing: 1px;
+    font-weight: bold;
 }
 

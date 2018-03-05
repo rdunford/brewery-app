@@ -33,7 +33,7 @@ class About extends Component {
                         </div>
                         <div id='tap-beers' className='tap-beers'>
                             <h2>BEERS ON TAP:</h2>
-                            <ul className='on_tap-list'>
+                            <ul className='on-tap-list'>
                                 <ul>MVP</ul>
                                 <ul>MAD MACEY</ul>
                                 <ul>New California Republic</ul>
@@ -90,7 +90,7 @@ class About extends Component {
                     Sed eros eros, mattis sit amet viverra non, commodo id turpis. Nulla facilisi. Nunc dignissim feugiat finibus.</p>
                                 <br />
                             </Fade>
-                            <Fade bottom>
+                            {/* <Fade bottom>
                                 <p>Fusce non nunc elementum, rutrum metus eu. Sed urna neque, auctor elementum blandit
                        at, ultricies non purus. Suspendisse sed rhoncus urna. Sed id lectus at arcu rhoncus ullamcorper. Aliquam ipsum est, sodales vel tincidunt
                        eget, elementum condimentum ipsum. Aenean efficitur metus sodales sem fermentum, non pellentesque odio tempor. Sed euismod, nulla ut ultricies
@@ -98,7 +98,7 @@ class About extends Component {
                        lacinia felis. Pellentesque at nunc vel ante lobortis fringilla a quis lacus. Nunc eget ante nisi. In vel risus convallis, pharetra ante vel,
                        semper sapien. Nulla quis lorem sed nulla tristique dictum. Mauris a rutrum ex. Aenean vel pretium augue. Ut sit amet libero quis arcu blandit rhoncus.
                     Sed eros eros, mattis sit amet viverra non, commodo id turpis. Nulla facilisi. Nunc dignissim feugiat finibus.</p>
-                            </Fade>
+                            </Fade> */}
                             <br />
                             <br />
                             <Fade bottom>

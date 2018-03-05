@@ -9,11 +9,12 @@ import About from './components/About/About';
 import StoreFront from './components/StoreFront/StoreFront';
 // import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 import Dashboard from './components/Dashboard/Dashboard';
+import Admin from './components/Admin/Admin';
 
 export default (
 
     <div>
-        
+
         <Switch>
             <Route component={Home} exact path='/' />
             <Route component={Beer} path="/beer" />
@@ -22,6 +23,7 @@ export default (
             {/* <Route component={ShoppingCart} path='/shoppingcart' /> */}
             <Route component={StoreFront} path='/storefront' />
             <Route component={Dashboard} path='/dashboard' />
+            <Route component={Admin} path='/admin' />
         </Switch>
 
     </div>

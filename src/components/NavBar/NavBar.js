@@ -29,7 +29,7 @@ class NavBar extends Component {
                         <div><Link to='/events'>EVENTS</Link></div>
                         <div><Link to='/about'>OUR STORY</Link></div>
                         <div><Link to='/storefront'>STORE</Link></div>
-                        {isLoggedIn ? (<div><Link to = '/dashboard'>PROFILE</Link></div>) : null}
+                        {isLoggedIn ? (<div><Link to='/dashboard'>PROFILE</Link></div>) : null}
                         {isLoggedIn ? (<a href={process.env.REACT_APP_LOGOUT}><div>LOG OUT</div></a>) : (<a href={process.env.REACT_APP_LOGIN}><div>LOGIN</div></a>)}
                     </ul>
                 </div>

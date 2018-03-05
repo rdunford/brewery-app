@@ -1,10 +1,13 @@
 .custom-overlay{
-    background: rgba(0, 0, 0, 0.75) !important;
+    background: rgba(0, 0, 0, 0.75);
 }
 
 .custom-modal {
     display:flex;
-    background: #fff !important;
-    max-width: 500px !important;
+    background: #fff;
+    max-width: 70%;
     width: 100%;
+    flex-flow: column wrap;
+    /* max-height: 90%; */
+    overflow: hidden;
   }

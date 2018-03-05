@@ -4,11 +4,12 @@ import './StoreFront.css';
 import NavBar from '../NavBar/NavBar';
 import BottomNav from '../NavBar/BottomNav'
 import StripeCheckout from 'react-stripe-checkout';
-import { getInventory, addToCart, removeFromCart, getCategoryInventory, getUserInfo, emptyCart, checkout } from '../../ducks/reducer';
+import { getInventory, addToCart, removeFromCart, getCategoryInventory, getUserInfo, emptyCart, checkout, raiseQuantity } from '../../ducks/reducer';
 import axios from 'axios';
 import Modal from 'react-responsive-modal/lib/css';
 import Fade from 'react-reveal'
 import './modal-styling.css';
+import 'react-responsive-modal/lib/react-responsive-modal.css';
 
 class StoreFront extends Component {
     constructor() {
@@ -34,13 +35,15 @@ class StoreFront extends Component {
         const cart = this.props.cart;
         const userid_order = this.props.user.userid;
         console.log(userid_order, 'this is user id being passed')
+        axios.post('/api/order', { cart, userid_order }).then(resp =>{
+            console.log(resp);
+        })
         this.props.checkout()
 
         token.card = void 0;
         axios.post('/api/payment', { token, amount: 100 }).then(response => {
             this.props.checkout()
             alert('Thank you for your business.')
-            axios.post('/api/order', { cart, userid_order })
 
         });
     }
@@ -57,9 +60,12 @@ class StoreFront extends Component {
         const cartItems = this.props.cart.map((element, index) => {
             return (
                 <div className='cartMenu-container' key={index}>
-                    <div>{element.productname}</div>
                     <img className='cartMenu-img' src={element.img} alt='inventoryImage' />
-                    <div>{'$' + element.price}</div>
+                    <h4>{element.productname}: </h4>
+                    <h4>{'$' + element.price}</h4>
+                    <div className='addToCart' >+</div>
+                    <div className='cartItemQuantity'>{1}</div>
+                    <div className='subFromCart'>-</div>
                     <button className='removeItem' onClick={() => this.props.removeFromCart()}>REMOVE</button>
                 </div>
             )
@@ -83,13 +89,13 @@ class StoreFront extends Component {
             // console.log(typeof element.price)
             return (
                 <Fade>
-                <div className='product-container' key={index}>
-                    <h2>{element.productname}</h2>
-                    <img className='product-img' src={element.img} alt='' />
-                    <h5>{element.description}</h5>
-                    <h3>{'$' + element.price}</h3>
-                    <button className='addToCartBtn' onClick={() => this.props.addToCart(element)} >ADD TO CART</button>
-                </div>
+                    <div className='product-container' key={index}>
+                        <h2>{element.productname}</h2>
+                        <img className='product-img' src={element.img} alt='' />
+                        <h5>{element.description}</h5>
+                        <h3>{'$' + element.price}</h3>
+                        <button className='addToCartBtn' onClick={() => this.props.addToCart(element)} >ADD TO CART</button>
+                    </div>
                 </Fade>
             )
         });
@@ -106,6 +112,7 @@ class StoreFront extends Component {
                             <li className='hoodie' onClick={() => this.props.getCategoryInventory('hoodie')}>HOODIES</li>
                             <li className='glassware' onClick={() => this.props.getCategoryInventory('glassware')}>GLASSWARE</li>
                             <li className='misc' onClick={() => this.props.getCategoryInventory('misc')}>MISC</li>
+                            <li className='all' onClick={() => this.props.getInventory()}>ALL</li>
                         </ul>
 
                         {/* Quick visual cart summary and allows drop down for more detailed summary + checkout */}
@@ -137,15 +144,34 @@ class StoreFront extends Component {
                         <div className='cart-container' >
                             <div onClick={this.toggleCartModal} className='cart-summary'>CART SUMMARY:({cartQuantity})${totalCartPrice}</div>
                         </div>
-                        <Modal big closeOnEsc open={open} onClose={this.toggleCartModal} classNames={{ overlay:'custom-overlay', modal:'custom-modal'}}>
-                        <div>Cart Details:</div>
-                        
-                         </Modal>
+
+
+                        <Modal big closeOnEsc open={open} onClose={this.toggleCartModal} classNames={{ overlay: 'custom-overlay', modal: 'custom-modal' }}>
+                            <div className='topCart'>
+                                <h3>Cart Details:</h3>
+                                {cartItems}
+                            </div>
+
+                            <div className='bottomCart'>
+
+                                <div className='totalPrice'>Total Price: ${totalCartPrice}</div>
+                                <div id='clear-cart' className='clear-cart' onClick={() => this.props.emptyCart()} >| Clear Cart |</div>
+                                <div id='stripeBtn' className='checkoutBtn'>
+                                    <StripeCheckout
+                                        token={this.onToken}
+                                        stripeKey={process.env.REACT_APP_STRIPEKEY}
+                                        amount={totalCartPrice * 100}
+                                    />
+                                </div>
+                            </div>
+                        </Modal>
+
+
                     </div>
 
                     {/* Renders the inventory desired */}
                     <div className='storefront-container'>
-                            {inventoryItem}
+                        {inventoryItem}
                     </div>
 
                     <div className='spacer'></div>
@@ -154,6 +180,7 @@ class StoreFront extends Component {
             </div>
         )
     }
+
 }
 
 function mapStateToProps(state) {
@@ -163,5 +190,4 @@ function mapStateToProps(state) {
         user: state.user
     }
 }
-
-export default connect(mapStateToProps, { getUserInfo, getInventory, addToCart, getCategoryInventory, removeFromCart, emptyCart, checkout })(StoreFront);
+export default connect(mapStateToProps, { getUserInfo, getInventory, addToCart, getCategoryInventory, removeFromCart, emptyCart, checkout, raiseQuantity })(StoreFront);

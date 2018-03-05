@@ -1,31 +1,40 @@
 import React, { Component } from 'react';
 import './Dashboard.css';
-import { getUserInfo } from './../../ducks/reducer.js';
 import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
 import BottomNav from '../NavBar/BottomNav';
-import { getUserOrders } from '../../ducks/reducer';
+import { getUserInfo, getUserOrders } from '../../ducks/reducer';
 
 class Dashboard extends Component {
-    constructor(props) {
+    // constructor(props) {
         //super allows the use of the 'this' keyword in the constructor and state
         //pass in props through the constructor and super because the docs say so
-        super(props);
-        this.state = {
-            userInfo: {}
-        }
-    }
+    //     super(props);
+    //     this.state = {
+    //         userInfo: {}
+    //     }
+    // }
     //retrieving the information from the logged in user
     componentDidMount() {
         this.props.getUserInfo()
-        this.props.getUserOrders()
+        this.props.getUserOrders(this.props.user.userid)
     }
 
+
     render() {
-
         // const userOrders
-
         const user = this.props.user;
+
+        console.log(this.props.productsOrdered)
+
+        const UserPastOrders = this.props.productsOrdered.map((element, index) =>{
+            return(
+                <div className='User-products' key={index}>
+                    <h3>{element.productname}</h3>
+                </div>
+            )
+        })
+
         return (
             <div className='main_dashboard-container'>
                 <NavBar />
@@ -40,7 +49,8 @@ class Dashboard extends Component {
                     </div>
                     <div className='order-history-container'>
                         <div className='order-container'>
-
+                            Recent User orders: <br />
+                            {user ? UserPastOrders : 'Nothing has been ordered!' }
                         </div>
                     </div>
                     
@@ -60,7 +70,8 @@ function mapStateToProps(state) {
     console.log('This is state going to the Dashboard', state)
     //object that is merged with the state object
     return {
-        user: state.user
+        user: state.user,
+        productsOrdered: state.productsOrdered
     }
 }
 //taking the object and the state object merging them through the reducer
