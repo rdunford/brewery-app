@@ -15,7 +15,8 @@ class Events extends Component {
         this.state = {
             day: null,
             month: null,
-            year: null
+            year: null,
+            choosenMonth: null
         }
         this.monthChange = this.monthChange.bind(this)
     }
@@ -40,6 +41,9 @@ class Events extends Component {
 
     monthChange(){
         let month = this.refs.selectedMonth.value
+        this.setState({
+            choosenMonth: month
+        })
         this.props.getEventsByMonth(month);
     }
 
@@ -96,7 +100,7 @@ class Events extends Component {
                            <div>
                             Interested in past or upcoming events - check it out!
                         
-                        <select ref='selectedMonth'
+                            <select ref='selectedMonth'
                         value=''
                         className='month-select'
                         onChange={this.monthChange}>
